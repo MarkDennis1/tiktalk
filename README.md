@@ -32,7 +32,7 @@ cd client
 cp .env.example .env
 ```
 
-For the Server:
+For the Server: You need to replace the MONGO_URL
 
 ```bash
 cd server
