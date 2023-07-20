@@ -8,7 +8,7 @@ Before running the application on your local machine, make sure you have the fol
 
 - Node.js (https://nodejs.org)
 - npm (Node Package Manager, usually comes with Node.js installation)
-- MongoDB
+- MongoDB (https://www.mongodb.com)
 
 
 ## Getting Started
