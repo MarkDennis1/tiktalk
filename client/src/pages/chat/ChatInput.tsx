@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState, useEffect } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import SendIcon from "../../components/SendIcon";
 import { useMessages } from "../../hooks/useMessages";
 import { useParams } from "react-router-dom";
@@ -20,7 +20,6 @@ const ChatInput = ({ selectedUser }: { selectedUser: any }) => {
         sender: { email: user?.email },
         content: currentChatMessage,
       });
-      console.log({ email: user?.email });
       setCurrentChatMessage("");
     }
   };

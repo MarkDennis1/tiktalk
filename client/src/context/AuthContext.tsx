@@ -25,7 +25,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     try {
       const currentUser = JSON.parse(localStorage.getItem("user") || "");
       if (currentUser) {
-        console.log(currentUser)
         dispatch({ type: "LOGIN", payload: currentUser });
       } else {
         dispatch({ type: "LOGOUT", payload: null });

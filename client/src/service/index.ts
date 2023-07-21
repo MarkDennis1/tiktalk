@@ -17,11 +17,9 @@ apiClient.interceptors.request.use(
 // handle responses in the API
 apiClient.interceptors.response.use(
   (response) => {
-    console.log("Interceptor Response Success: ", response);
     return response;
   },
   (error) => {
-    console.log("Interceptor Response Error: ", error);
     switch (error.response.status) {
       case 401:
         localStorage.clear();

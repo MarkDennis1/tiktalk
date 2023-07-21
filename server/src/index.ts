@@ -5,7 +5,12 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { Server } from "socket.io";
 import { createServer } from "http";
-import { authRoute, userRoute, conversationRoute, messageRoute } from "@/routes";
+import {
+  authRoute,
+  userRoute,
+  conversationRoute,
+  messageRoute,
+} from "@/routes";
 
 dotenv.config();
 const app = express();
@@ -34,20 +39,17 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log(`Connected user: ${socket.id}`);
-  socket.on("join", (data)=>{
-    socket.join(data.chat_id)
-  })
+  socket.on("join", (data) => {
+    socket.join(data.chat_id);   
+  });
   socket.on("message", (data) => {
-    console.log(`user sent a message: ${data.content}`)
     socket.join(data.chat_id);
     io.to(data.chat_id).emit("receive", data);
-    // io.emit('message', data);
   });
-  socket.on("typing", (data)=>{
-    socket.join(data.chat_id)
+  socket.on("typing", (data) => {
+    socket.join(data.chat_id);
     io.to(data.chat_id).emit("otherIsTyping", data);
-  })
+  });
 });
 
 server.listen(8000, () => {

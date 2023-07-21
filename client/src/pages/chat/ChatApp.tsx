@@ -6,7 +6,9 @@ import UserList from "./UserList";
 import { useUsers } from "../../hooks/useUsers";
 import { useMessages } from "../../hooks/useMessages";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import { useNotifContext } from "../../hooks/useNotifContext";
 import { useNavigate } from "react-router-dom";
+import { socket } from "../../hooks/useSocket";
 
 const ChatApp = () => {
   const [users, setUsers] = useState([]);
@@ -14,6 +16,7 @@ const ChatApp = () => {
   const { getUsers } = useUsers();
   const { getConversations, storeConversation } = useMessages();
   const { user } = useAuthContext();
+  const { notifications, setNotifications } = useNotifContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,13 +27,34 @@ const ChatApp = () => {
 
     const fetchMessages = async () => {
       const result = await getConversations();
-      console.log("messages fetched: ", result)
+      result.forEach((message: any) => {
+        socket.emit("join", { chat_id: message._id });
+      });
       setMessages(result);
     };
 
     fetchUsers();
     fetchMessages();
   }, []);
+
+  useEffect(() => {
+    const onReceive = (data: any) => {
+      if (!notifications.includes(data)) {
+        setNotifications((prevState: any) => [data, ...prevState]);
+      }
+
+      const fetchConversations = async () => {
+        const result = await getConversations();
+        setMessages(result);
+      };
+      fetchConversations();
+    };
+    socket?.on("receive", onReceive);
+
+    return () => {
+      socket?.off("receive", onReceive);
+    };
+  }, [socket]);
 
   const handleRedirectToMessage = async (receiverId: string) => {
     const { _id } = await storeConversation(receiverId);
@@ -57,12 +81,10 @@ const ChatApp = () => {
               _id,
               participants,
               messages,
-              isSeen,
             }: {
               _id: string;
               participants: any;
               messages: any;
-              isSeen: boolean;
             }) => {
               let receiver = participants.filter(
                 (participant: any) => participant.email != user?.email
@@ -74,7 +96,10 @@ const ChatApp = () => {
                   name={receiver.name}
                   sender={messages[messages.length - 1].sender}
                   message={messages[messages.length - 1].content}
-                  isSeen={isSeen}
+                  isSeen={
+                    notifications.filter((notif) => notif.chat_id === _id)
+                      .length < 1
+                  }
                   key={_id}
                 />
               );

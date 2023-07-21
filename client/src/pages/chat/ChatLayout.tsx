@@ -10,6 +10,7 @@ import OtherUserMessage from "./OtherUserMessage";
 import { socket } from "../../hooks/useSocket";
 import { useLottie } from "lottie-react";
 import typingAnimation from "../../lotties/typing_animation.json";
+import { useNotifContext } from "../../hooks/useNotifContext";
 
 export interface User {
   _id: number;
@@ -25,6 +26,7 @@ const ChatLayout = () => {
   const [messages, setMessages] = useState<Array<any>>();
   const [reRunCount, setReRunCount] = useState(0);
   const [otherUserIsTyping, setOtherUserIsTyping] = useState(false);
+  const { setNotifications } = useNotifContext();
 
   const lottieOptions = {
     animationData: typingAnimation,
@@ -46,10 +48,12 @@ const ChatLayout = () => {
     // the chat header displays the authenticated user instead of the selectedUser
     // Temporary solution: ReRun the fetch for 2 times
     if (reRunCount < 2) {
+      setNotifications((prevNotifs: Array<any>) =>
+        prevNotifs.filter((prevNotif) => prevNotif.chat_id !== id)
+      );
       const fetchMessages = async () => {
         try {
           const conversation = await getConversationWithId(id);
-          console.log("selected user: ", conversation?.selectedUser);
           setSelectedUser(conversation?.selectedUser);
           setMessages(conversation?.messages);
         } catch (error) {
@@ -73,8 +77,6 @@ const ChatLayout = () => {
 
   useEffect(() => {
     const onReceive = (data: any) => {
-      console.log(`sender: ${data.sender.email}`);
-      console.log(`current user: ${user}`);
       // set the new selectChat
       setMessages((prevMessages: any) => [
         ...(prevMessages || []),
@@ -83,8 +85,6 @@ const ChatLayout = () => {
     };
     const onTyping = (data: any) => {
       // set the state to true
-      console.log(`user typing: ${data.sender.email}`);
-      console.log(user?.email);
       if (user?.email != data.sender.email) {
         setOtherUserIsTyping(true);
         setTimeout(() => {
