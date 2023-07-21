@@ -8,6 +8,8 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import CurrentUserMessage from "./CurrentUserMessage";
 import OtherUserMessage from "./OtherUserMessage";
 import { socket } from "../../hooks/useSocket";
+import { useLottie } from "lottie-react";
+import typingAnimation from "../../lotties/typing_animation.json";
 
 export interface User {
   _id: number;
@@ -22,6 +24,22 @@ const ChatLayout = () => {
   const [selectedUser, setSelectedUser] = useState<User | any>();
   const [messages, setMessages] = useState<Array<any>>();
   const [reRunCount, setReRunCount] = useState(0);
+  const [otherUserIsTyping, setOtherUserIsTyping] = useState(false);
+
+  const lottieOptions = {
+    animationData: typingAnimation,
+    loop: true,
+  };
+
+  const lottieStyle = {
+    height: 28,
+  };
+
+  const { View } = useLottie(lottieOptions, lottieStyle);
+
+  useEffect(() => {
+    socket.emit("join", { chat_id: id });
+  }, []);
 
   useEffect(() => {
     // Bug: When refreshing the browser,
@@ -38,12 +56,12 @@ const ChatLayout = () => {
           // Handle any errors that occur during the fetch.
         }
       };
-  
+
       fetchMessages();
-  
+
       // Increase the reRunCount by 1 after each execution.
       setReRunCount((prevCount) => prevCount + 1);
-  
+
       // Clean-up function
       return () => {
         setSelectedUser(null);
@@ -63,10 +81,23 @@ const ChatLayout = () => {
         { sender: { email: data.sender.email }, content: data.content },
       ]);
     };
+    const onTyping = (data: any) => {
+      // set the state to true
+      console.log(`user typing: ${data.sender.email}`);
+      console.log(user?.email);
+      if (user?.email != data.sender.email) {
+        setOtherUserIsTyping(true);
+        setTimeout(() => {
+          setOtherUserIsTyping(false);
+        }, 2000);
+      }
+    };
     socket?.on("receive", onReceive);
+    socket?.on("otherIsTyping", onTyping);
 
     return () => {
       socket.off("receive", onReceive);
+      socket.off("otherIsTyping", onTyping);
     };
   }, [socket]);
 
@@ -93,6 +124,13 @@ const ChatLayout = () => {
               );
             }
           )}
+        <div
+          className={`${
+            otherUserIsTyping ? "inline-block" : "hidden"
+          } self-start bg-gray-200 rounded-full px-2`}
+        >
+          {View}
+        </div>
       </ChatBody>
       <ChatInput selectedUser={selectedUser} />
     </div>

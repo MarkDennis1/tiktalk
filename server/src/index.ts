@@ -35,6 +35,9 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.log(`Connected user: ${socket.id}`);
+  socket.on("join", (data)=>{
+    socket.join(data.chat_id)
+  })
   socket.on("message", (data) => {
     console.log(`user sent a message: ${data.content}`)
     socket.join(data.chat_id);
