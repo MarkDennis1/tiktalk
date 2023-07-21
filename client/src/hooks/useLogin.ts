@@ -1,11 +1,11 @@
-import { useState, Dispatch } from "react";
+import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import { AuthService } from "../service";
 
 export const useLogin = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { dispatch }: { dispatch: Dispatch<Action> } = useAuthContext();
+  const { setUser } = useAuthContext();
 
   const login = async (email: string, password: string) => {
     setError("");
@@ -17,7 +17,7 @@ export const useLogin = () => {
       localStorage.setItem("user", JSON.stringify(result.data));
 
       // update the auth context user
-      dispatch({ type: "LOGIN", payload: result.data });
+      setUser(result.data);
       setLoading(false);
     } catch (exception: any) {
       setLoading(false);

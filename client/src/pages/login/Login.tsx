@@ -74,15 +74,6 @@ const Login = () => {
           </div>
         </form>
         <hr />
-        <div className="text-center mt-6">
-          <div className="text-xl mb-2">Demo Account</div>
-          <div>
-            <span className="font-semibold">Email:</span> johndoe@gmail.com
-          </div>
-          <div>
-            <span className="font-semibold">Password:</span> password
-          </div>
-        </div>
         <div className="flex gap-1 mt-6 justify-center">
           <p>Don't have an account?</p>
           <Link to="/register" className="text-blue-700 hover:underline">

@@ -6,7 +6,7 @@ import "./index.css";
 import Login from "./pages/login/Login.tsx";
 import Register from "./pages/register/Register.tsx";
 import ChatLayout from "./pages/chat/ChatLayout.tsx";
-import { AuthContextProvider } from "./context/AuthContext.tsx";
+import AuthContextProvider from "./context/AuthContext.tsx";
 import NotifContextProvider from "./context/NotificationContext.tsx";
 
 const router = createBrowserRouter([
