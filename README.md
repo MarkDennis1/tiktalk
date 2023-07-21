@@ -17,7 +17,7 @@ Follow the steps below to set up and run the application on your local machine:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/tiktalk.git
+git clone https://github.com/MarkDennis1/tiktalk.git
 cd tiktalk
 ```
 
@@ -32,7 +32,7 @@ cd client
 cp .env.example .env
 ```
 
-For the Server: You need to replace the MONGO_URL
+For the Server: You need to inlcude your MONGO_URL
 
 ```bash
 cd server
