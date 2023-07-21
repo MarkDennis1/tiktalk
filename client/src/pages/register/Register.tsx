@@ -29,7 +29,7 @@ const Register = () => {
   };
   return (
     <div className="h-screen w-screen grid place-items-center bg-gray-400 text-gray-700">
-      <div className="h-screen md:w-96 bg-white p-6 rounded-xl">
+      <div className="h-screen md:h-auto md:w-96 bg-white p-6 rounded-xl">
         <h2 className="text-2xl text-center mb-4 font-bold">Register</h2>
         <p className="text-center mb-4">
           Lorem ipsum dolor sit amet consectetur adipisicing elit.

@@ -41,7 +41,7 @@ function App() {
                 <NotificationIcon numberOfNotif={notifications.length} />
               </button>
               {showNotif && (
-                <div className="absolute flex flex-col top-14 -right-1/2 bg-white rounded-lg border border-gray-500 max-h-[calc(100vh-100px)] overflow-x-scroll">
+                <div className="absolute flex flex-col top-14 -right-1/2 bg-white rounded-lg border border-gray-500 max-h-[calc(100vh-100px)] overflow-y-scroll">
                   {notifications.length > 0
                     ? notifications.map((notif, index) => {
                         return (
@@ -64,7 +64,9 @@ function App() {
                           </button>
                         );
                       })
-                    : "No notifications"}
+                    : (
+                      <div className="w-52 p-4 text-center">No notifications</div>
+                    )}
                 </div>
               )}
             </li>
