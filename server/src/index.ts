@@ -41,6 +41,10 @@ io.on("connection", (socket) => {
     io.to(data.chat_id).emit("receive", data);
     // io.emit('message', data);
   });
+  socket.on("typing", (data)=>{
+    socket.join(data.chat_id)
+    io.to(data.chat_id).emit("otherIsTyping", data);
+  })
 });
 
 server.listen(8000, () => {

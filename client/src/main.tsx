@@ -7,7 +7,6 @@ import Login from "./pages/login/Login.tsx";
 import Register from "./pages/register/Register.tsx";
 import ChatLayout from "./pages/chat/ChatLayout.tsx";
 import { AuthContextProvider } from "./context/AuthContext.tsx";
-import { ChatContextProvider } from "./context/ChatContext.tsx";
 
 const router = createBrowserRouter([
   {
@@ -31,9 +30,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <AuthContextProvider>
-      <ChatContextProvider>
-        <RouterProvider router={router} />
-      </ChatContextProvider>
+      <RouterProvider router={router} />
     </AuthContextProvider>
   </React.StrictMode>
 );
