@@ -45,15 +45,8 @@ const Login = () => {
             />
           </div>
           <div className="w-full">
-            <div className="w-full flex justify-between items-center">
-              <label htmlFor="password">Password</label>
-              <Link
-                className="hover:underline text-blue-700 text-sm"
-                to="forgot-password"
-              >
-                Forgot password?
-              </Link>
-            </div>
+            <label htmlFor="password">Password</label>
+
             <input
               id="password"
               className="px-4 py-2 w-full bg-gray-200 rounded-lg outline-none focus:ring-1 focus:ring-blue-500"
