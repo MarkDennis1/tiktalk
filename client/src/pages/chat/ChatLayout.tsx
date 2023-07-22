@@ -102,7 +102,7 @@ const ChatLayout = () => {
   }, [socket]);
 
   return (
-    <div>
+    <div className="md:max-w-2xl mx-auto">
       <ChatHeader email={selectedUser?.email} name={selectedUser?.name} />
       <ChatBody>
         {!!messages &&

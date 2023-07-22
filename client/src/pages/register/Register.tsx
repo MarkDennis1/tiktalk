@@ -2,6 +2,7 @@ import { useState, useEffect, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useRegister } from "../../hooks/useRegister";
+import logo from "../../assets/logo.png";
 
 const Register = () => {
   const [fname, setFname] = useState("");
@@ -30,10 +31,10 @@ const Register = () => {
   return (
     <div className="h-screen w-screen grid place-items-center bg-gray-400 text-gray-700">
       <div className="h-screen md:h-auto md:w-96 bg-white p-6 rounded-xl">
-        <h2 className="text-2xl text-center mb-4 font-bold">Register</h2>
-        <p className="text-center mb-4">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </p>
+        <div className="flex justify-center">
+          <img className="h-16" src={logo} alt="tiktalk_logo" />
+        </div>
+        <p className="text-center mb-4">Create your Tiktalk account.</p>
         <hr />
         <form
           onSubmit={handleRegister}

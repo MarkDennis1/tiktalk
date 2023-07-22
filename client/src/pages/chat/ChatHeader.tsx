@@ -7,7 +7,7 @@ const ChatHeader = ({ email, name }: { email: string | undefined; name: string |
     navigate(-1);
   };
   return (
-    <div className="p-4 border border-b-gray-400">
+    <div className="p-4 border-b">
       <div className="flex gap-2 items-center">
         <button
           onClick={handleBackClick}

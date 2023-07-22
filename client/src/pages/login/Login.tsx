@@ -2,6 +2,7 @@ import { useState, useEffect, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "../../hooks/useLogin";
 import { useAuthContext } from "../../hooks/useAuthContext";
+import logo from "../../assets/logo.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,7 +24,9 @@ const Login = () => {
   return (
     <div className="h-screen w-screen grid place-items-center bg-gray-400 text-gray-700">
       <div className="h-screen md:h-auto md:w-96 bg-white p-6 rounded-xl">
-        <h2 className="text-2xl text-center mb-4 font-bold">TIKTALK</h2>
+        <div className="flex justify-center">
+          <img className="h-16" src={logo} alt="tiktalk_logo" />
+        </div>
         <p className="text-center mb-4">
           Experience the power of conversations that bring people closer.
         </p>

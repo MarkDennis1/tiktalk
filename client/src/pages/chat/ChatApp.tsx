@@ -62,7 +62,7 @@ const ChatApp = () => {
   };
 
   return (
-    <div className="mt-16 h-[calc(100vh-158px)]">
+    <div className="mt-16 max-w-2xl mx-auto h-[calc(100vh-158px)]">
       <UserList>
         {users.length &&
           users.map(({ avatar, name, _id }) => (
