@@ -7,10 +7,11 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import CurrentUserMessage from "./CurrentUserMessage";
 import OtherUserMessage from "./OtherUserMessage";
-import { socket } from "../../hooks/useSocket";
+import { socket } from "../../socket";
 import { useLottie } from "lottie-react";
 import typingAnimation from "../../lotties/typing_animation.json";
 import { useNotifContext } from "../../hooks/useNotifContext";
+import { useNotification } from "../../hooks/useNotification";
 
 export interface User {
   _id: number;
@@ -20,13 +21,14 @@ export interface User {
 
 const ChatLayout = () => {
   const { id } = useParams();
-  const { getConversationWithId, error, loading } = useMessages();
+  const { getConversationWithId } = useMessages();
   const { user } = useAuthContext();
   const [selectedUser, setSelectedUser] = useState<User | any>();
   const [messages, setMessages] = useState<Array<any>>();
   const [reRunCount, setReRunCount] = useState(0);
   const [otherUserIsTyping, setOtherUserIsTyping] = useState(false);
   const { setNotifications } = useNotifContext();
+  const { destroyNotification } = useNotification();
 
   const lottieOptions = {
     animationData: typingAnimation,
@@ -51,6 +53,9 @@ const ChatLayout = () => {
       setNotifications((prevNotifs: Array<any>) =>
         prevNotifs.filter((prevNotif) => prevNotif.chat_id !== id)
       );
+      const updateNotification = async () => {
+        destroyNotification(id)
+      }
       const fetchMessages = async () => {
         try {
           const conversation = await getConversationWithId(id);
@@ -62,6 +67,7 @@ const ChatLayout = () => {
       };
 
       fetchMessages();
+      updateNotification();
 
       // Increase the reRunCount by 1 after each execution.
       setReRunCount((prevCount) => prevCount + 1);

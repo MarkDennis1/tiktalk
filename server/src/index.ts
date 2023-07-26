@@ -10,6 +10,7 @@ import {
   userRoute,
   conversationRoute,
   messageRoute,
+  notificationRoute
 } from "@/routes";
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
+app.use("/api/notifications", notificationRoute);
 
 mongoose
   .connect(process.env.MONGO_URL)

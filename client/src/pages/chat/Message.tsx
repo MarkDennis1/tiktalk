@@ -19,7 +19,7 @@ const Message = ({
   return (
     <button
       onClick={click}
-      className={`flex w-full px-6 py-2 gap-2 items-center ${isSeen && 'text-gray-500'} hover:bg-gray-200`}
+      className={`group relative flex w-full px-6 py-2 gap-2 items-center ${isSeen && 'text-gray-500'} hover:bg-gray-200`}
     >
       <div className="aspect-square h-12 w-12 rounded-full overflow-hidden flex-shrink-0">
         <img
@@ -38,6 +38,11 @@ const Message = ({
           <span className="">{message}</span>
         </div>
       </div>
+
+      {/* delete button */}
+      <button className="hidden group-hover:block absolute right-4">
+          delete
+      </button>
     </button>
   );
 };

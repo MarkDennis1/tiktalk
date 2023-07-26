@@ -3,18 +3,26 @@ import SendIcon from "../../components/SendIcon";
 import { useMessages } from "../../hooks/useMessages";
 import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { socket } from "../../hooks/useSocket";
+import { useNotification } from "../../hooks/useNotification";
+import { socket } from "../../socket";
 
 const ChatInput = ({ selectedUser }: { selectedUser: any }) => {
   const [currentChatMessage, setCurrentChatMessage] = useState("");
   const { storeMessage } = useMessages();
   const { id } = useParams();
   const { user } = useAuthContext();
+  const { storeNotification } = useNotification();
 
   const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (currentChatMessage.trim() !== "") {
       await storeMessage(selectedUser._id, id, currentChatMessage);
+      await storeNotification(
+        id,
+        selectedUser._id,
+        currentChatMessage,
+      )
+
       socket.emit("message", {
         chat_id: id,
         sender: { email: user?.email },

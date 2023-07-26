@@ -31,7 +31,7 @@ function App() {
   return (
     <>
       <div>
-        <nav className="fixed top-0 left-0 w-full bg-white border border-b-gray-400 shadow-md">
+        <nav className="z-10 fixed top-0 left-0 w-full bg-white border border-b-gray-400 shadow-md">
           <div className="md:w-[42rem] mx-auto flex justify-between items-center px-6 py-3">
             <a href="/" className="text-xl truncate">
               {user?.name}
@@ -39,7 +39,7 @@ function App() {
             <ul className="flex items-center gap-2">
               <li className="relative">
                 <button className="hover:bg-gray-200 rounded-full p-2" onClick={() => setShowNotif((prev) => !prev)}>
-                  <NotificationIcon numberOfNotif={notifications.length} />
+                  <NotificationIcon numberOfNotif={notifications ? notifications.length : 0} />
                 </button>
                 {showNotif && (
                   <div className="absolute flex flex-col top-14 -right-1/2 bg-white rounded-lg border border-gray-500 max-h-[calc(100vh-100px)] overflow-y-scroll">

@@ -43,4 +43,5 @@ export { default as AuthService } from "./AuthService";
 export { default as UserService } from "./UserService";
 export { default as ConversationService } from "./ConversationService";
 export { default as MessageService } from "./MessageService";
+export { default as NotificationService } from "./NotificationService";
 export { apiClient };

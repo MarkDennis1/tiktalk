@@ -5,7 +5,12 @@ const conversationSchema = new Schema(
   {
     participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
     messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
-    isSeen: { type: Boolean, default: false },
+    deletedBy: [
+      {
+        user: { type: Schema.Types.ObjectId, ref: "User" },
+        deletedAt: { type: Date, default: null },
+      },
+    ],
   },
   {
     timestamps: true,

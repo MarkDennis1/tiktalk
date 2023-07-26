@@ -16,6 +16,10 @@ class ConversationService {
   static storeConversation(payload: object) {
     return apiClient.post("/api/conversations", payload);
   }
+
+  static destroyConversation(id:string) {
+    return apiClient.delete(`/api/conversations/${id}`);
+  }
 }
 
 export default ConversationService;

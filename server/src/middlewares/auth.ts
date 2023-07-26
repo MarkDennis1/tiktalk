@@ -18,7 +18,7 @@ const authenticateUser = async (
     req.user = loggedUser;
     next();
   } catch (exception) {
-    console.log(exception.message);
+    console.log("auth:middleware:authenticateUser error: ", exception.message);
     res.status(400).send({ error: "Invalid token, " + exception.message });
   }
 };

@@ -8,7 +8,8 @@ import { useMessages } from "../../hooks/useMessages";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useNotifContext } from "../../hooks/useNotifContext";
 import { useNavigate } from "react-router-dom";
-import { socket } from "../../hooks/useSocket";
+import { useNotification } from "../../hooks/useNotification";
+import { socket } from "../../socket";
 
 const ChatApp = () => {
   const [users, setUsers] = useState([]);
@@ -17,9 +18,15 @@ const ChatApp = () => {
   const { getConversations, storeConversation } = useMessages();
   const { user } = useAuthContext();
   const { notifications, setNotifications } = useNotifContext();
+  const { getNotifications } = useNotification();
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchNotification = async () => {
+      const result = await getNotifications();
+      setNotifications(result);
+    };
+
     const fetchUsers = async () => {
       const result = await getUsers();
       setUsers(result);
@@ -35,6 +42,7 @@ const ChatApp = () => {
 
     fetchUsers();
     fetchMessages();
+    fetchNotification();
   }, []);
 
   useEffect(() => {
@@ -98,7 +106,7 @@ const ChatApp = () => {
                   message={messages[messages.length - 1].content}
                   isSeen={
                     notifications.filter((notif) => notif.chat_id === _id)
-                      .length < 1
+                      .length === 0
                   }
                   key={_id}
                 />

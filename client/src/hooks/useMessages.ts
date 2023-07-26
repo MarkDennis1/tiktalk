@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { ConversationService, MessageService } from "../service";
+import {
+  ConversationService,
+  MessageService,
+} from "../service";
 import { useAuthContext } from "./useAuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -90,6 +93,22 @@ export const useMessages = () => {
       await storeConversation(receiverId, data._id, conversationId);
       setLoading(false);
     } catch (exception: any) {
+      setError(exception.response?.data?.error);
+      if (exception.response?.status === 401) {
+        navigate("/login");
+      }
+    }
+  };
+
+  const destroyConversation = async (id: string) => {
+    setError("");
+    setLoading(true);
+    try {
+      await ConversationService.destroyConversation(id);
+      setLoading(false);
+      return true;
+    } catch (exception: any) {
+      setError(exception.response?.data?.error);
       if (exception.response?.status === 401) {
         navigate("/login");
       }
@@ -101,6 +120,7 @@ export const useMessages = () => {
     getConversationWithId,
     storeConversation,
     storeMessage,
+    destroyConversation,
     error,
     loading,
   };
