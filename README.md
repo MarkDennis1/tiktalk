@@ -2,7 +2,7 @@
 
 ## Live Demo
 
-https://tiktalk-mern-netlify.app
+https://tiktalk-mern.netlify.app
 
 ## Prerequisites
 
