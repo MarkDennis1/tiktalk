@@ -12,8 +12,8 @@ import { useNotification } from "../../hooks/useNotification";
 import { socket } from "../../socket";
 
 const ChatApp = () => {
-  const [users, setUsers] = useState([]);
-  const [messages, setMessages] = useState([]);
+  const [users, setUsers] = useState<Array<any>>([]);
+  const [messages, setMessages] = useState<Array<any>>([]);
   const { getUsers } = useUsers();
   const { getConversations, storeConversation } = useMessages();
   const { user } = useAuthContext();
@@ -72,17 +72,18 @@ const ChatApp = () => {
   return (
     <div className="mt-16 max-w-2xl mx-auto h-[calc(100vh-158px)]">
       <UserList>
-        {users.length &&
-          users.map(({ avatar, name, _id }) => (
-            <User
-              click={() => handleRedirectToMessage(_id)}
-              avatar={avatar}
-              name={name}
-              key={_id}
-            />
-          ))}
+        {users.length
+          ? users.map(({ avatar, name, _id }) => (
+              <User
+                click={() => handleRedirectToMessage(_id)}
+                avatar={avatar}
+                name={name}
+                key={_id}
+              />
+            ))
+          : "No users"}
       </UserList>
-      {messages.length > 0 ? (
+      {messages.length ? (
         <MessageList>
           {messages.map(
             ({

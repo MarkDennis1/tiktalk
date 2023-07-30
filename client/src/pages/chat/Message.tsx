@@ -40,9 +40,9 @@ const Message = ({
       </div>
 
       {/* delete button */}
-      <button className="hidden group-hover:block absolute right-4">
+      {/* <button className="hidden group-hover:block absolute right-4">
           delete
-      </button>
+      </button> */}
     </button>
   );
 };

@@ -24,7 +24,7 @@ const ChatLayout = () => {
   const { getConversationWithId } = useMessages();
   const { user } = useAuthContext();
   const [selectedUser, setSelectedUser] = useState<User | any>();
-  const [messages, setMessages] = useState<Array<any>>();
+  const [messages, setMessages] = useState<Array<any>>([]);
   const [reRunCount, setReRunCount] = useState(0);
   const [otherUserIsTyping, setOtherUserIsTyping] = useState(false);
   const { setNotifications } = useNotifContext();
@@ -54,8 +54,8 @@ const ChatLayout = () => {
         prevNotifs.filter((prevNotif) => prevNotif.chat_id !== id)
       );
       const updateNotification = async () => {
-        destroyNotification(id)
-      }
+        destroyNotification(id);
+      };
       const fetchMessages = async () => {
         try {
           const conversation = await getConversationWithId(id);
@@ -111,7 +111,7 @@ const ChatLayout = () => {
     <div className="md:max-w-2xl mx-auto">
       <ChatHeader email={selectedUser?.email} name={selectedUser?.name} />
       <ChatBody>
-        {!!messages &&
+        {messages.length ? (
           messages.map(
             (
               {
@@ -129,7 +129,12 @@ const ChatLayout = () => {
                 <OtherUserMessage key={index} message={content} />
               );
             }
-          )}
+          )
+        ) : (
+          <div className="flex flex-col text-2xl h-full w-full justify-center items-center">
+            {`Start a chat with ${selectedUser?.name}`}
+          </div>
+        )}
         <div
           className={`${
             otherUserIsTyping ? "inline-block" : "hidden"
