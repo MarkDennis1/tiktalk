@@ -1,6 +1,8 @@
 # TIKTALK
 
-This repository contains the client and server components of the **TIKTALK** application.
+## Live Demo
+
+https://tiktalk-mern.netlify.app
 
 ## Prerequisites
 
@@ -11,7 +13,7 @@ Before running the application on your local machine, make sure you have the fol
 - MongoDB (https://www.mongodb.com)
 
 
-## Getting Started
+## Run on your local machine
 
 Follow the steps below to set up and run the application on your local machine:
 
